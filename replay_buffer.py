@@ -20,7 +20,7 @@ class ReplayBuffer:
         self.memory = deque(maxlen=buffer_size)
         self.batch_size = batch_size
         self.experience = namedtuple("Experience", field_names=["state", "action", "reward", "next_state", "done"])
-        self.seed = random.seed(seed)
+        self.seed = torch.manual_seed(seed)
         self.device = device
 
 

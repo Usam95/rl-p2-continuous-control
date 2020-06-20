@@ -9,7 +9,7 @@ UPDATE_EVERY = 20       # how often to update the network
 LR_ACTOR  = 1e-3		# learning rate of the actor 
 LR_CRITIC = 1e-3		# learning rate of the critic 
 WEIGHT_DECAY = 0.0		# L2 weight decay
-N_LEARN_UPDATE = 10		# number of learning updates
+N_LEARN_UPDATES = 10		# number of learning updates
 SEED = 42
 
 FC1_UNITS = 256			# Number of nodes in first hidden layer of Actor and Critic
