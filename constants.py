@@ -1,4 +1,5 @@
 
+from torch import device, cuda
 
 BUFFER_SIZE = int(1e6)  # replay buffer size
 BATCH_SIZE = 64         # minibatch size
@@ -15,4 +16,4 @@ SEED = 42
 FC1_UNITS = 256			# Number of nodes in first hidden layer of Actor and Critic
 FC2_UNITS = 256			# Number of nodes in second hidden layer of Actor and Critic
 
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+device = device("cuda:0" if cuda.is_available() else "cpu")

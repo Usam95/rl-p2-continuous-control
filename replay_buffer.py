@@ -2,12 +2,12 @@ from collections import namedtuple, deque
 import numpy as np
 import random
 import torch
-
+from constants import device
 class ReplayBuffer:
-	 """Fixed-size buffer to store experience tuples."""
+    """Fixed-size buffer to store experience tuples."""
 
-	 def __init__(self, action_size, buffer_size, batch_size, seed, device):
-	 	"""Initialize a ReplayBuffer object.
+    def __init__(self, action_size, buffer_size, batch_size, seed, device):
+        """Initialize a ReplayBuffer object.
         Params
         ======
             action_size (int): dimension of each action
