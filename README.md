@@ -15,14 +15,10 @@ In this project an agent is trained to move its double-jointed arm to targets lo
 **Action Space**: Every entry in the action vector should be a number between -1 and 1.
 
 In order to consider the environment has been solved, the agent must get an average score of +30 over 100 consecutive episodes.
-![Trained Agent][./images/joint-arm.png]
+![Trained Agent](./images/joint-arm.png)
 
 
-### Solving the Environment
-
-Note that your project submission need only solve one of the two versions of the environment. 
-
-## Getting Started
+### Getting Started
 
 1. Configure a new conda virtual environment for Python 3.6 with the needed requirements as described in this [Udacity](https://github.com/udacity/deep-reinforcement-learning#dependencies) repository. 
 2. Install Unity Agents using: `pip install unityagents`
