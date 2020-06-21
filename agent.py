@@ -29,7 +29,7 @@ class Agent():
         # Actor Network (w/ Target Network)
         self.actor_local  = Actor(state_size, action_size, fc1_units, fc2_units).to(device)
         self.actor_target = Actor(state_size, action_size, fc1_units, fc2_units).to(device)
-        self.actor_optimer = optim.Adam(self.actor_local.parameters(), lr=LR_ACTOR)
+        self.actor_optimizer = optim.Adam(self.actor_local.parameters(), lr=LR_ACTOR)
 
         # Critic Network (w/ Target Network)
         self.critic_local  = Critic(state_size, action_size, fc1_units, fc2_units).to(device)
@@ -43,18 +43,18 @@ class Agent():
         self.memory = ReplayBuffer(action_size, BUFFER_SIZE, BATCH_SIZE, SEED, device)
 
 
-    def step(self, time_step, state, ation, reward, next_state, done):
+    def step(self, time_step, state, action, reward, next_state, done):
         """Save experience in replay memory, and use random sample from buffer to learn."""
-        Agent.memory.add(state, action, reward, next_state, done)
+        self.memory.add(state, action, reward, next_state, done)
 
         # Learn only every N_TIME_STEPS
         if time_step % N_TIME_STEPS != 0:
             return 
 
         # Learn if enough samples are available in replay buffer
-        if len(Agent.memory) > BATCH_SIZE: 
+        if len(self.memory) > BATCH_SIZE: 
             for i in range(N_LEARN_UPDATES):
-                experiences = Agent.memory.sample()
+                experiences = self.memory.sample()
                 self.learn(experiences, GAMMA)
 
     def act(self, state, add_noise=True):
@@ -95,7 +95,7 @@ class Agent():
         critic_loss = F.mse_loss(Q_expected, Q_targets)
         # Minimize the loss
         self.critic_optimizer.zero_grad()
-        critic_loss.backwards()
+        critic_loss.backward()
         torch.nn.utils.clip_grad_norm_(self.critic_local.parameters(), 1)
         self.critic_optimizer.step()
 
@@ -124,10 +124,21 @@ class Agent():
         for target_param, local_param in zip(target_model.parameters(), local_model.parameters()):
             target_param.data.copy_(tau*local_param.data + (1.0-tau)*target_param.data)
 
+            
+    def store(self):
+        torch.save(self.actor_local.state_dict(), 'checkpoint_actor.pth')
+        torch.save(self.critic_local.state_dict(), 'checkpoint_critic.pth')
 
+    def load(self):
+        if os.path.isfile('checkpoint_actor.pth') and os.path.isfile('checkpoint_critic.pth'):
+            print("=> loading checkpoints for Actor and Critic... ")
+            self.actor_local.load_state_dict('checkpoint_actor')
+            self.critic_local.load_state_dict('checkpoint_critic')
+            print("done !")
+        else:
+            print("no checkpoints found for Actor and Critic...")
 
-
-
+    
 
 
 

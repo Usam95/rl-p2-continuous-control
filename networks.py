@@ -70,7 +70,7 @@ class Critic(nn.Module):
         self.seed = torch.manual_seed(SEED)
         self.fc1 = nn.Linear(state_size, fc1_units)
         self.bn1 = nn.BatchNorm1d(fc1_units)
-        self.fc2 = nn.Linear(fc1_units, fc2_units)
+        self.fc2 = nn.Linear(fc1_units + action_size, fc2_units)
         self.bn2 = nn.BatchNorm1d(fc2_units)
         self.fc3 = nn.Linear(fc2_units, 1)
         self.reset_parameters()
